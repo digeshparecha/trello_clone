@@ -1,0 +1,111 @@
+// Place all the styles related to the Projects controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: https://sass-lang.com/
+
+
+
+body {
+  background-color: #23719F;
+  overflow: auto;
+}
+[draggable] {
+  position: relative;
+  -moz-user-select: -moz-none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -o-user-select: none;
+    user-select: none;
+}
+.list {
+  background-color: #E3E3E3;
+  border-radius: 3px;
+  margin: 5px 5px;
+  padding: 10px;
+  width: 260px;
+}
+.list>header {
+  font-weight: bold;
+  font-size: 15px;
+  line-height: 18px;
+  cursor: grab;
+}
+.list article {
+  border-radius: 3px;
+  margin-top: 5px;
+}
+
+.list .card {
+  background-color: #FFF;
+  border-bottom: 1px solid #CCC;
+  padding: 6px 8px;
+  cursor: pointer;
+}
+.list .card:hover {
+  background-color: #F0F0F0;
+}
+.detail {
+  font-size: 12px;
+  color: #939393;
+}
+.hidden {
+  display: none;
+}
+[data-fakenode] {
+  background-color: gray;
+}
+
+.project-details{
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  padding: 5px;
+}
+
+.list-card{
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+.card-composer-container{
+  display: flex;
+  justify-content: space-between;
+  max-height: 38px;
+  min-height: 38px;
+  align-items: center;
+  margin-top: 10px;
+}
+
+.open-card-composer{
+  &:hover{
+    background-color: #091e4214 !important;
+    color: #172b4d !important;
+  }
+  border-radius: 3px;
+  color: #5e6c84;
+  display: block;
+  padding: 4px 8px;
+  flex: 1 0 auto;
+  position: relative;
+  text-decoration: none;
+  -webkit-user-select: none;
+  user-select: none;
+  .icon-add{
+    &:before{
+      content: "+";
+    }
+    color: #6b778c;
+    margin-right: 2px;
+  }
+}
+
+.bg-gray-box{
+  background-color: #E3E3E3;
+  border-radius: 3px;
+  padding: 10px;
+}
+
+.sortable-ghost {
+  opacity: 0.4;
+}

@@ -1,0 +1,31 @@
+<div class="project-details" id="project-detail-list">
+  <% project.stages.order(:position).each do |stage|%>
+    <section class="list", data-stage="<%= stage.id %>" , style= 'border: 5px solid <%= stage.color %> !important'>
+      <header><%= stage.name %></header>
+      <div class="list-card" id= "<%= stage.id.to_s + "_tickets" %>" data-stage="<%= stage.id %>">
+        <% stage.tickets.order(:position).each do |ticket|%>
+          <article class="card" data-ticket= "<%= ticket.id %>">
+            <header><%= ticket.title %></header>
+            <div class="detail">1/2</div>
+          </article>
+        <% end %>
+        <script>
+          $(document).on("turbolinks:load",function() {
+            var el = document.getElementById("<%= stage.id.to_s + "_tickets" %>");
+            var sortable = Sortable.create(el,{
+              ghostClass: "sortable-ghost",
+              group: "tickets",
+              onEnd: function (evt) {
+                $.ajax({
+                  url: "/sort_ticket",
+                  type: "POST",
+                  data: {position: evt.newIndex + 1, id: evt.item.dataset["ticket"], stage: evt.item.parentElement.dataset["stage"]}
+                })
+              },
+            });
+          })
+        </script>
+      </div>
+    </section>
+  <%end%>
+</div>

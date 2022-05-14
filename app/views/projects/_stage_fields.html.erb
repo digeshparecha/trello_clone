@@ -1,0 +1,14 @@
+<div class= "nested-fields col-12 mt-2">
+  
+    <div class= "row">
+      <div class="col-9">
+        <%= f.text_field :name, class: "form-control", placeholder: "Enter Stage Name" %>
+      </div>
+      <div class="col-2">
+        <%= f.color_field :color, class: "form-control h-100"%>
+      </div>
+      <div class="col-1">
+        <%= link_to_remove_association "x", f, class: "btn btn-danger" %>
+      </div>
+    </div>
+</div>
