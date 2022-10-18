@@ -12,7 +12,7 @@ class ProjectsController < ApplicationController
                         @projects.last
                       end
     @ticket = Ticket.new
-    @stages = @current_ptoject.stages
+    @stages = @current_ptoject&.stages
   end
 
   # GET /projects/1 or /projects/1.json

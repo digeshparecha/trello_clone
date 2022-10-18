@@ -6,7 +6,7 @@
         <%#= select_tag "Projects", options_from_collection_for_select(@projects, :id, :name, selected ) , class: "form-select"%>
         <div class="dropdown">
           <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
-            <%= @current_ptoject.name %>
+            <%= @current_ptoject&.name %>
           </a>
 
           <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
@@ -22,16 +22,20 @@
     <button type="button" class="btn btn-primary me-2" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
     New Project
     </button>
-    <button type="button" class="btn btn-primary me-2" data-bs-toggle="modal" data-bs-target="#editproject">
-    Edit Project
+    <% if @current_ptoject.present? %>
+      <button type="button" class="btn btn-primary me-2" data-bs-toggle="modal" data-bs-target="#editproject">
+      Edit Project
+      </button>
+      <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#newtask">
+      New Ticket
     </button>
-    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#newtask">
-    New Ticket
-    </button>
+    <% end %>
   </div>
 </div>
 
-<%= render partial:"stages", locals: {project: @current_ptoject } %>
+<% if @current_ptoject.present? %>
+  <%= render partial:"stages", locals: {project: @current_ptoject } %>
+<% end %>
 
 
 
@@ -52,76 +56,77 @@
   </div>
 </div>
 
-<div class="modal fade" id="editproject" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-  <div class="modal-dialog modal-lg modal-dialog-scrollable">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="staticBackdropLabel">Edit Project</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <%= render 'form', project: @current_ptoject %>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-      </div>
-    </div>
-  </div>
-</div>
-
-
-
-<div class="modal fade" id="newtask" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-  <div class="modal-dialog modal-lg modal-dialog-scrollable">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="staticBackdropLabel">Add New Task</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <%= form_with(model: @ticket, url: create_ticket_path) do |form| %>
-          <%= hidden_field_tag "id", @current_ptoject.id  %>
-          <div class="row">
-            <div class="col-12">
-              <%= form.label :title, "Ticket name" %>
-            </div>
-            <div class="col-12">
-              <%= form.text_field :title, class: "form-control", placeholder: "Enter Ticket Name"%>
-            </div>
-          </div>
-
-           <div class="row">
-            <div class="col-12">
-              <%= form.label :description, "Description" %>
-            </div>
-            <div class="col-12">
-              <%= form.text_area :description, class: "form-control"%>
-            </div>
-          </div>
-
-          <div class="row">
-            <div class="col-12">
-              <%= form.label :stage_id, "Select Stage" %>
-            </div>
-            <div class="col-12">
-              <%= form.select :stage_id, @stages.pluck(:name, :id ), {},{class: "form-select"}%>
-            </div>
-          </div>
-
-          <div class="row mt-3">
-            <div class="col-12 text-center">
-              <%= form.submit "Submit", class: "btn btn-primary" %>
-            </div>
-          </div>
-        <% end %>
-
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+<% if @current_ptoject.present? %>
+  <div class="modal fade" id="editproject" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-scrollable">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="staticBackdropLabel">Edit Project</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <%= render 'form', project: @current_ptoject %>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        </div>
       </div>
     </div>
   </div>
-</div>
+
+
+  <div class="modal fade" id="newtask" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-scrollable">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="staticBackdropLabel">Add New Task</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <%= form_with(model: @ticket, url: create_ticket_path) do |form| %>
+            <%= hidden_field_tag "id", @current_ptoject.id  %>
+            <div class="row">
+              <div class="col-12">
+                <%= form.label :title, "Ticket name" %>
+              </div>
+              <div class="col-12">
+                <%= form.text_field :title, class: "form-control", placeholder: "Enter Ticket Name"%>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-12">
+                <%= form.label :description, "Description" %>
+              </div>
+              <div class="col-12">
+                <%= form.text_area :description, class: "form-control"%>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-12">
+                <%= form.label :stage_id, "Select Stage" %>
+              </div>
+              <div class="col-12">
+                <%= form.select :stage_id, @stages.pluck(:name, :id ), {},{class: "form-select"}%>
+              </div>
+            </div>
+
+            <div class="row mt-3">
+              <div class="col-12 text-center">
+                <%= form.submit "Submit", class: "btn btn-primary" %>
+              </div>
+            </div>
+          <% end %>
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>
 
 
 <script>

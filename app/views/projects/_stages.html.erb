@@ -1,5 +1,5 @@
 <div class="project-details" id="project-detail-list">
-  <% project.stages.order(:position).each do |stage|%>
+  <% project&.stages&.order(:position)&.each do |stage|%>
     <section class="list", data-stage="<%= stage.id %>" , style= 'border: 5px solid <%= stage.color %> !important'>
       <header><%= stage.name %></header>
       <div class="list-card" id= "<%= stage.id.to_s + "_tickets" %>" data-stage="<%= stage.id %>">
